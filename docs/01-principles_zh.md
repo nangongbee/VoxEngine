@@ -48,7 +48,8 @@
 | 6.5 | Runtime 自报能力（实时转写、工具、打断） | 核心不再按「级联还是实时」猜 | v0.1 | 完成 |
 | 7 | 实时 Runtime | 能切到端到端语音 | v0.1 | 完成 |
 | 7.5 | 工具调用：媒体、超时、取消、设备工具筛选；「用户开口」的判断标准可配 | 讲故事这类工具能做 | v0.2 | 完成 |
-| 7.6 | 产品口子：网关挂产品路由、每场会话选 Profile、播报入口、远程 MCP | 产品不用改框架就能搭起来 | v0.2 | 进行中，产品用到哪个做哪个 |
+| 7.6a | 网关挂产品路由（`fetch` / `sockets`） | 产品可挂 `/push`、`/sync` 等，不用改框架 | v0.2 | 完成 |
+| 7.6b | 每场会话异步选 Profile；播报入口；远程 MCP → Tool | 记忆注入、提醒推送、外部工具 | v0.2 | 未做 |
 | 8 | 网页麦适配器 | 第二种终端证明适配层成立 | v0.3 | 未做 |
 | 9 | 费用、可观测性、更多 Provider；流式识别、流式合成 | 开源时好用、好查；首包更快 | v0.3 | 未做 |
 | 10 | 混合 Runtime：实时为主，工具收口到 Runtime，出错或工具过多时降级到级联 | 一份 Profile 三种说话方式 | 以后 | 未做 |
@@ -57,7 +58,7 @@
 
 ---
 
-## 4. 分层（一句话版本）
+## 4. 分层与目录
 
 从大处看分三层：
 
@@ -67,17 +68,48 @@
 | 能力层 | 任务、送达渠道（音箱播报、飞书、网页）、工具来源、记忆。每个模块单独可选，只通过 `Tool`、播报入口、事件流接进来，核心不知道它们 | 现在没有；做异步任务时再定放哪 |
 | 产品层 | 选择和组装：人设、开放哪些工具、结果推到哪、什么要确认 | 产品自己的仓库或应用 |
 
-核心层内部：
+核心层内部与产品怎么接：
 
 ```text
-网关（启动、连接表、路由）
-  ├ 终端适配器（小智、网页）
-  ├ 核心（会话、事件、播放、打断、工具调用）
-  └ Runtime（级联、实时）
-      └ Provider（识别、模型、合成、实时语音、VAD）
+产品（自己的仓库）
+  Profile、工具、自己的 HTTP / WebSocket 路由
+        │ 只用公开 API
+gateway ─ 库函数：HTTP/WS、连接表；/chat 以外可交给产品
+        │
+   adapters ◀─protocol─▶ core ─ 会话、播放、打断、事件、Tool
+                       │
+                    runtimes ─ cascade / realtime / echo
+                       │
+                    providers ─ asr / llm / tts / realtime / vad
 ```
 
-适配器和核心之间的「内部会话消息」是第一个定下来的合同。
+依赖只往下：`protocol` 零依赖；`core` 只依赖 `protocol`；`adapters` 与 `runtimes` 互不认识；只有 `gateway` 负责装配。
+
+给产品的口子：
+
+| 口子 | 状态 |
+|------|------|
+| 统一事件（转写、回复、工具、媒体、会话结束） | 已有 |
+| `Profile.deviceTools`、`acceptUtterance`、`media`、`toolTimeoutMs` | 已有 |
+| 网关 `fetch` / `sockets` 挂产品路由 | 已有 |
+| 每场会话异步选 Profile；播报入口；远程 MCP → Tool | 未做 |
+
+仓库目录（标「计划」的还不存在）：
+
+```text
+packages/
+  protocol/   内部会话消息、音频帧、事件
+  core/       会话、播放、打断、Tool
+  audio/      Ogg / Opus、PCM
+  runtimes/   cascade / realtime / echo；（计划 hybrid）
+  providers/  doubao、openai 兼容
+  adapters/   xiaozhi、fake；（计划 web）
+  gateway/    服务进程、事件日志
+examples/     01 假终端 … 05 讲故事工具
+tests/  docs/  LICENSE
+```
+
+适配器和核心之间的「内部会话消息」是第一个定下来的合同，见 `03-internal-protocol_zh.md`。
 
 ---
 

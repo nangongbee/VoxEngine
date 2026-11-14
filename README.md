@@ -2,20 +2,80 @@
 
 可自己部署的语音终端引擎（TypeScript）。各种语音终端连到同一个网关，用同一套会话引擎对话；说话方式（级联 / 实时）和模型厂商都能换。
 
-## 快速开始
+当前硬件入口兼容[小智固件](https://github.com/78/xiaozhi-esp32)的 WebSocket 协议（`/chat`）；服务端自建，不改固件。
+
+## 环境
+
+- [Bun](https://bun.sh) 1.1+（推荐；示例与测试按 Bun 写）
+- 真机示例需要能连上本机的小智兼容设备，以及对应云厂商密钥（见下）
 
 ```bash
+git clone <本仓库>
+cd VoxEngine
 bun install
-bun examples/01-fake-terminal/index.ts   # 不用硬件、不用密钥跑通一场对话
-bun examples/02-xiaozhi-echo/index.ts    # 小智设备连 ws://<本机>:18989/chat，说话后回放
-bun examples/03-xiaozhi-cascade/probe.ts # 配好密钥后自检：合成 → 识别 → 大模型
-bun examples/03-xiaozhi-cascade/index.ts # 小智设备真对话：豆包识别 + 方舟 + 豆包合成
-bun examples/04-xiaozhi-realtime/probe.ts # 自检豆包端到端实时语音
-bun examples/04-xiaozhi-realtime/index.ts # 同一台设备换成实时语音，和示例 3 只差 Runtime 一行
-bun examples/05-custom-skill/index.ts    # 加一个讲故事工具：工具返回音频，核心接在确认语后面播
 bun test
 bun run check
 ```
+
+## 最快跑通（无需硬件、无需密钥）
+
+```bash
+bun examples/01-fake-terminal/index.ts
+```
+
+假终端说一句话，回声 Runtime 播回来，并演示一次打断。
+
+## 接小智设备
+
+1. 电脑与设备同一局域网；防火墙放行端口（默认 `18989`）。
+2. 设备 WebSocket 指到：`ws://<电脑局域网IP>:18989/chat`。
+3. 按需求选下面某一档示例。
+
+### 回声（验证链路，不要密钥）
+
+```bash
+bun examples/02-xiaozhi-echo/index.ts
+```
+
+设备说话后原样回放。
+
+### 级联对话（识别 → 大模型 → 合成）
+
+```bash
+cp examples/03-xiaozhi-cascade/.env.example examples/03-xiaozhi-cascade/.env
+# 编辑 .env：至少填 DOUBAO_API_KEY（或 APP_ID+ACCESS_KEY）和 ARK_API_KEY、ARK_MODEL
+set -a && source examples/03-xiaozhi-cascade/.env && set +a
+bun examples/03-xiaozhi-cascade/probe.ts   # 可选：合成 → 识别 → 大模型自检
+bun examples/03-xiaozhi-cascade/index.ts
+```
+
+### 端到端实时语音
+
+```bash
+cp examples/04-xiaozhi-realtime/.env.example examples/04-xiaozhi-realtime/.env
+# 编辑 .env：填 DOUBAO_API_KEY（实时只认新控制台 API Key）
+set -a && source examples/04-xiaozhi-realtime/.env && set +a
+bun examples/04-xiaozhi-realtime/probe.ts  # 可选自检
+bun examples/04-xiaozhi-realtime/index.ts
+```
+
+与示例 3 同一台设备，主要差别是 Runtime 一行。
+
+### 讲故事工具（媒体播放）
+
+在示例 3 或 4 的密钥基础上：
+
+```bash
+mkdir -p examples/05-custom-skill/stories
+# 放入 24 kHz 单声道 Ogg Opus、约 20 ms 一帧，例如：
+# ffmpeg -i 故事.mp3 -ac 1 -ar 24000 -c:a libopus -b:a 48k -frame_duration 20 -application audio \
+#   examples/05-custom-skill/stories/小兔子.ogg
+set -a && source examples/04-xiaozhi-realtime/.env && set +a   # 或 cascade 的 .env
+bun examples/05-custom-skill/index.ts                          # 默认实时
+RUNTIME=cascade bun examples/05-custom-skill/index.ts          # 级联
+```
+
+对设备说要听故事，模型应调用 `play_story`；确认语后开始播文件。
 
 ## 目录
 
@@ -24,20 +84,22 @@ packages/
   protocol/   终端 ↔ 核心的内部协议、音频帧、事件类型（零依赖）
   core/       会话、轮次、播放控速、打断、空闲结束、设备工具
   audio/      Ogg / Opus 拆包解码、PCM 工具
-  providers/  厂商能力：识别、大模型、合成、VAD、实时语音；doubao、openai 兼容
-  runtimes/   说话方式：cascade（级联）、realtime（端到端）、echo（回声，测试用）；各自声明能力
-  adapters/   终端适配：xiaozhi（小智固件 /chat）、fake（假终端）
-  gateway/    可运行的服务：HTTP/WebSocket、路由、事件日志
+  providers/  厂商：识别、大模型、合成、VAD、实时；doubao、openai 兼容
+  runtimes/   cascade / realtime / echo；各自声明能力
+  adapters/   xiaozhi（小智 /chat）、fake
+  gateway/    HTTP/WebSocket 服务、路由、事件日志
 examples/     可运行的例子
 tests/        跨包集成测试
 docs/         设计文档
 ```
 
+本仓库是 Bun workspaces；包名 `@voxengine/*`，目前按源码引用（`workspace:*`），适合直接从 Git 使用。根 `package.json` 标了 `private`，避免误发 npm。
+
 ## 文档
 
-1. [docs/01-principles_zh.md](docs/01-principles_zh.md)：开发规则、三层划分、路线图、参考的库
-2. [docs/03-internal-protocol_zh.md](docs/03-internal-protocol_zh.md)：适配器和核心之间的消息、音频、打断、主动播报
-3. [docs/05-tool-calling_zh.md](docs/05-tool-calling_zh.md)：工具调用：框架和产品怎么分、媒体、超时、取消
+1. [docs/01-principles_zh.md](docs/01-principles_zh.md)：规则、分层与目录、路线图、参考库
+2. [docs/03-internal-protocol_zh.md](docs/03-internal-protocol_zh.md)：适配器 ↔ 核心消息、音频、打断、主动播报
+3. [docs/05-tool-calling_zh.md](docs/05-tool-calling_zh.md)：工具与媒体：框架 / 产品分工、超时、取消
 
 ## 许可证
 
