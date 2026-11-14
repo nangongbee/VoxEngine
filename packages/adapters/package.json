@@ -1,0 +1,13 @@
+{
+  "name": "@voxengine/adapters",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./fake": "./src/fake/index.ts",
+    "./xiaozhi": "./src/xiaozhi/index.ts"
+  },
+  "dependencies": {
+    "@voxengine/core": "workspace:*",
+    "@voxengine/protocol": "workspace:*"
+  }
+}

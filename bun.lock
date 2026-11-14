@@ -1,0 +1,155 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "voxengine",
+      "devDependencies": {
+        "@types/bun": "latest",
+        "@voxengine/adapters": "workspace:*",
+        "@voxengine/core": "workspace:*",
+        "@voxengine/gateway": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+        "@voxengine/providers": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+        "typescript": "^6.0.2",
+      },
+    },
+    "examples/01-fake-terminal": {
+      "name": "@voxengine/example-fake-terminal",
+      "dependencies": {
+        "@voxengine/adapters": "workspace:*",
+        "@voxengine/core": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+      },
+    },
+    "examples/02-xiaozhi-echo": {
+      "name": "@voxengine/example-xiaozhi-echo",
+      "dependencies": {
+        "@voxengine/gateway": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+      },
+    },
+    "examples/03-xiaozhi-cascade": {
+      "name": "@voxengine/example-xiaozhi-cascade",
+      "dependencies": {
+        "@voxengine/audio": "workspace:*",
+        "@voxengine/gateway": "workspace:*",
+        "@voxengine/providers": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+      },
+    },
+    "examples/04-xiaozhi-realtime": {
+      "name": "@voxengine/example-xiaozhi-realtime",
+      "dependencies": {
+        "@voxengine/audio": "workspace:*",
+        "@voxengine/gateway": "workspace:*",
+        "@voxengine/providers": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+      },
+    },
+    "examples/05-custom-skill": {
+      "name": "@voxengine/example-custom-skill",
+      "dependencies": {
+        "@voxengine/audio": "workspace:*",
+        "@voxengine/core": "workspace:*",
+        "@voxengine/gateway": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+        "@voxengine/providers": "workspace:*",
+        "@voxengine/runtimes": "workspace:*",
+      },
+    },
+    "packages/adapters": {
+      "name": "@voxengine/adapters",
+      "version": "0.0.0",
+      "dependencies": {
+        "@voxengine/core": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+      },
+    },
+    "packages/audio": {
+      "name": "@voxengine/audio",
+      "version": "0.0.0",
+      "dependencies": {
+        "opusscript": "^0.1.1",
+      },
+    },
+    "packages/core": {
+      "name": "@voxengine/core",
+      "version": "0.0.0",
+      "dependencies": {
+        "@voxengine/protocol": "workspace:*",
+      },
+    },
+    "packages/gateway": {
+      "name": "@voxengine/gateway",
+      "version": "0.0.0",
+      "dependencies": {
+        "@voxengine/adapters": "workspace:*",
+        "@voxengine/core": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+      },
+    },
+    "packages/protocol": {
+      "name": "@voxengine/protocol",
+      "version": "0.0.0",
+    },
+    "packages/providers": {
+      "name": "@voxengine/providers",
+      "version": "0.0.0",
+      "dependencies": {
+        "@voxengine/audio": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+      },
+    },
+    "packages/runtimes": {
+      "name": "@voxengine/runtimes",
+      "version": "0.0.0",
+      "dependencies": {
+        "@voxengine/audio": "workspace:*",
+        "@voxengine/core": "workspace:*",
+        "@voxengine/protocol": "workspace:*",
+        "@voxengine/providers": "workspace:*",
+      },
+    },
+  },
+  "packages": {
+    "@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
+
+    "@types/node": ["@types/node@26.6.6", "", { "dependencies": { "undici-types": "~8.9.0" } }, "sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog=="],
+
+    "@voxengine/adapters": ["@voxengine/adapters@workspace:packages/adapters"],
+
+    "@voxengine/audio": ["@voxengine/audio@workspace:packages/audio"],
+
+    "@voxengine/core": ["@voxengine/core@workspace:packages/core"],
+
+    "@voxengine/example-custom-skill": ["@voxengine/example-custom-skill@workspace:examples/05-custom-skill"],
+
+    "@voxengine/example-fake-terminal": ["@voxengine/example-fake-terminal@workspace:examples/01-fake-terminal"],
+
+    "@voxengine/example-xiaozhi-cascade": ["@voxengine/example-xiaozhi-cascade@workspace:examples/03-xiaozhi-cascade"],
+
+    "@voxengine/example-xiaozhi-echo": ["@voxengine/example-xiaozhi-echo@workspace:examples/02-xiaozhi-echo"],
+
+    "@voxengine/example-xiaozhi-realtime": ["@voxengine/example-xiaozhi-realtime@workspace:examples/04-xiaozhi-realtime"],
+
+    "@voxengine/gateway": ["@voxengine/gateway@workspace:packages/gateway"],
+
+    "@voxengine/protocol": ["@voxengine/protocol@workspace:packages/protocol"],
+
+    "@voxengine/providers": ["@voxengine/providers@workspace:packages/providers"],
+
+    "@voxengine/runtimes": ["@voxengine/runtimes@workspace:packages/runtimes"],
+
+    "bun-types": ["bun-types@1.4.4", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-yjrJh5oGX7mMPKGd19YXyIjmEuj4G4zNC30bs7PM9Az7NQ3ndF3j6hbeRdvJTRQEhJ/FYQwW0a2moweEi2hMxQ=="],
+
+    "opusscript": ["opusscript@0.1.1", "", {}, "sha512-mL0fZZOUnXdZ78woRXp18lApwpp0lF5tozJOD1Wut0dgrA9WuQTgSels/CSmFleaAZrJi/nci5KOVtbuxeWoQA=="],
+
+    "typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+
+    "undici-types": ["undici-types@8.12.4", "", {}, "sha512-GNCQH3MbVGB8OAVAoTiLH8pu4wx5Ni3DWKpnBzGj3WDsi8EwmK0aOVBooNEt+g5YL1eHPxcS9XUTouwFU6j1kQ=="],
+
+    "@types/node/undici-types": ["undici-types@8.9.0", "", {}, "sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg=="],
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@voxengine/providers",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./openai": "./src/openai/index.ts",
+    "./doubao": "./src/doubao/index.ts"
+  },
+  "dependencies": {
+    "@voxengine/audio": "workspace:*",
+    "@voxengine/protocol": "workspace:*"
+  }
+}

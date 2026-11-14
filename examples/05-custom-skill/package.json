@@ -1,0 +1,16 @@
+{
+  "name": "@voxengine/example-custom-skill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun index.ts"
+  },
+  "dependencies": {
+    "@voxengine/audio": "workspace:*",
+    "@voxengine/core": "workspace:*",
+    "@voxengine/gateway": "workspace:*",
+    "@voxengine/protocol": "workspace:*",
+    "@voxengine/providers": "workspace:*",
+    "@voxengine/runtimes": "workspace:*"
+  }
+}

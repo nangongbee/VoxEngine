@@ -1,0 +1,12 @@
+{
+  "name": "@voxengine/example-xiaozhi-echo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun index.ts"
+  },
+  "dependencies": {
+    "@voxengine/gateway": "workspace:*",
+    "@voxengine/runtimes": "workspace:*"
+  }
+}

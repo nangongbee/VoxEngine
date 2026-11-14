@@ -1,0 +1,20 @@
+{
+  "name": "voxengine",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "examples/*"],
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@voxengine/adapters": "workspace:*",
+    "@voxengine/core": "workspace:*",
+    "@voxengine/gateway": "workspace:*",
+    "@voxengine/protocol": "workspace:*",
+    "@voxengine/providers": "workspace:*",
+    "@voxengine/runtimes": "workspace:*",
+    "@types/bun": "latest",
+    "typescript": "^6.0.2"
+  }
+}

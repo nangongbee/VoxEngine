@@ -1,0 +1,13 @@
+{
+  "name": "@voxengine/example-fake-terminal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun index.ts"
+  },
+  "dependencies": {
+    "@voxengine/adapters": "workspace:*",
+    "@voxengine/core": "workspace:*",
+    "@voxengine/runtimes": "workspace:*"
+  }
+}

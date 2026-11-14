@@ -1,0 +1,16 @@
+{
+  "name": "@voxengine/runtimes",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./echo": "./src/echo/index.ts",
+    "./cascade": "./src/cascade/index.ts",
+    "./realtime": "./src/realtime/index.ts"
+  },
+  "dependencies": {
+    "@voxengine/audio": "workspace:*",
+    "@voxengine/core": "workspace:*",
+    "@voxengine/protocol": "workspace:*",
+    "@voxengine/providers": "workspace:*"
+  }
+}

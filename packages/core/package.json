@@ -1,0 +1,11 @@
+{
+  "name": "@voxengine/core",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@voxengine/protocol": "workspace:*"
+  }
+}

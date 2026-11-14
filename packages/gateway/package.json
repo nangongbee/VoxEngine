@@ -1,0 +1,13 @@
+{
+  "name": "@voxengine/gateway",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@voxengine/adapters": "workspace:*",
+    "@voxengine/core": "workspace:*",
+    "@voxengine/protocol": "workspace:*"
+  }
+}

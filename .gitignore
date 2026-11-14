@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+*.log
+examples/05-custom-skill/stories/
+# 本地笔记，不随仓库发布
+docs/02-architecture_zh.md
+docs/04-lessons_zh.md
+
