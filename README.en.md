@@ -4,7 +4,7 @@
 
 A self-hosted voice-terminal engine in TypeScript. Devices share one gateway and one session engine. You can swap how a session speaks (cascade: speech-to-text → LLM → speech synthesis, or a realtime voice model) and which vendor implements each step.
 
-The hardware path speaks the [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32) WebSocket protocol on `/chat`. This repository is the server only. It does not ship or modify device firmware, and it is not affiliated with that project or with Volcengine. See [Attribution](#attribution).
+The hardware path speaks the [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32) WebSocket protocol on `/chat`. If you are looking for a self-hosted xiaozhi server, this is a TypeScript one. It is not the official xiaozhi-esp32 server: this repository does not ship or modify device firmware, and it is not affiliated with that project or with Volcengine. See [Attribution](#attribution).
 
 ## Requirements
 
