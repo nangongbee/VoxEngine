@@ -1,8 +1,10 @@
 # VoxEngine
 
+[English](README.en.md)
+
 可自己部署的语音终端引擎（TypeScript）。各种语音终端连到同一个网关，用同一套会话引擎对话；说话方式（级联 / 实时）和模型厂商都能换。
 
-当前硬件入口兼容[小智固件](https://github.com/78/xiaozhi-esp32)的 WebSocket 协议（`/chat`）；服务端自建，不改固件。
+当前硬件入口兼容[小智固件](https://github.com/78/xiaozhi-esp32)的 WebSocket 协议（`/chat`）；服务端自建，不改固件。本仓库与小智、火山引擎没有隶属关系，见文末归属声明。
 
 ## 环境
 
@@ -10,7 +12,7 @@
 - 真机示例需要能连上本机的小智兼容设备，以及对应云厂商密钥（见下）
 
 ```bash
-git clone <本仓库>
+git clone https://github.com/nangongbee/VoxEngine.git
 cd VoxEngine
 bun install
 bun test
@@ -102,6 +104,18 @@ docs/         设计文档
 1. [docs/01-principles_zh.md](docs/01-principles_zh.md)：规则、分层与目录、路线图、参考库
 2. [docs/03-internal-protocol_zh.md](docs/03-internal-protocol_zh.md)：适配器 ↔ 核心消息、音频、打断、主动播报
 3. [docs/05-tool-calling_zh.md](docs/05-tool-calling_zh.md)：工具与媒体：框架 / 产品分工、超时、取消
+
+## 贡献
+
+见 [CONTRIBUTING.md](CONTRIBUTING.md)。推送和 Pull Request 会跑 GitHub Actions：`bun install`、`bun test`、`bun run check`。
+
+## 归属
+
+- 设备侧协议兼容 [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)（MIT）。本仓库只实现服务端，不包含、也不修改该固件。
+- `doubao`、`openai` 目录是对火山引擎语音 / 方舟，以及 OpenAI Chat Completions 兼容接口的客户端。接口、商标归各自所有者。
+- 唯一的第三方运行时依赖是 [opusscript](https://github.com/abalabahaha/opusscript)（MIT），用于 Opus 解码。
+
+VoxEngine 与上述项目和厂商没有隶属、背书或合作关系。
 
 ## 许可证
 
