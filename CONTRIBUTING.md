@@ -22,6 +22,7 @@ bun run check
 - 厂商协议的细节留在 `packages/providers`；设备协议的细节留在 `packages/adapters`。核心只认 `packages/protocol` 里的消息。
 - 人设、曲库、提示词、密钥放在你自己的产品里，不要放进本仓库。
 - 不要提交 `.env`、音频故事、日志。`examples/*/.env.example` 只保留空变量名。
+- 给用户看的说明放 `docs/`；开发过程笔记放 `notes/`（除 `notes/README.md` 外不进 git）。
 
 ## Pull Request
 

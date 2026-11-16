@@ -101,9 +101,13 @@ docs/         设计文档
 
 ## 文档
 
+给使用者看的设计说明在 `docs/`：
+
 1. [docs/01-principles_zh.md](docs/01-principles_zh.md)：规则、分层与目录、路线图、参考库
 2. [docs/03-internal-protocol_zh.md](docs/03-internal-protocol_zh.md)：适配器 ↔ 核心消息、音频、打断、主动播报
 3. [docs/05-tool-calling_zh.md](docs/05-tool-calling_zh.md)：工具与媒体：框架 / 产品分工、超时、取消
+
+维护者本地的开发笔记约定见 [notes/README.md](notes/README.md)（笔记正文不随仓库发布）。
 
 ## 贡献
 

@@ -41,7 +41,9 @@ Packages are a Bun workspace (`@voxengine/*`, `workspace:*`). The root `package.
 
 ## Docs
 
-Chinese design notes: [principles](docs/01-principles_zh.md), [internal protocol](docs/03-internal-protocol_zh.md), [tool calling](docs/05-tool-calling_zh.md).
+User-facing design notes (Chinese): [principles](docs/01-principles_zh.md), [internal protocol](docs/03-internal-protocol_zh.md), [tool calling](docs/05-tool-calling_zh.md).
+
+Local development scratch notes live under `notes/` and are not published; see [notes/README.md](notes/README.md).
 
 ## Contributing
 
